@@ -1,0 +1,59 @@
+:root {
+  --ink: #07110f;
+  --ink-2: #0d1a17;
+  --panel: rgba(12, 28, 24, 0.72);
+  --line: rgba(155, 232, 111, 0.14);
+  --mint: #9be86f;
+  --mint-soft: #c8f5a8;
+  --bone: #e8efe6;
+  --muted: #8aa397;
+  --danger: #ff8f7a;
+  --user: #15352c;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --radius: 22px;
+  --font-display: "Syne", sans-serif;
+  --font-body: "Sora", sans-serif;
+  color: var(--bone);
+  background: var(--ink);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% -10%, rgba(155, 232, 111, 0.18), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 10%, rgba(62, 140, 120, 0.22), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(20, 70, 55, 0.35), transparent 55%),
+    linear-gradient(165deg, #07110f 0%, #0a1613 45%, #08120f 100%);
+  color: var(--bone);
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(155, 232, 111, 0.35);
+  color: var(--ink);
+}

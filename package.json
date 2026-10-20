@@ -1,0 +1,19 @@
+{
+  "name": "luma-chatbot",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n ai-agent,backend,frontend -c yellow,blue,green \"npm run dev:ai-agent\" \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "dev:ai-agent": ".venv/bin/python -m uvicorn src.main:app --app-dir ai-agent --port 8001 --reload",
+    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
+    "start": "npm run start -w backend",
+    "build": "npm run build -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
