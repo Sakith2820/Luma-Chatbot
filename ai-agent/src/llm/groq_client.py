@@ -1,6 +1,11 @@
 from langchain_groq import ChatGroq
 
-from src.config.settings import GROQ_API_KEY, GROQ_MODEL, GROQ_TEMPERATURE
+from src.config.settings import (
+    ANSWER_MAX_OUTPUT_TOKENS,
+    GROQ_API_KEY,
+    GROQ_MODEL,
+    GROQ_TEMPERATURE,
+)
 
 
 def create_groq_model() -> ChatGroq:
@@ -11,4 +16,5 @@ def create_groq_model() -> ChatGroq:
         api_key=GROQ_API_KEY,
         model=GROQ_MODEL,
         temperature=GROQ_TEMPERATURE,
+        max_tokens=ANSWER_MAX_OUTPUT_TOKENS,
     )

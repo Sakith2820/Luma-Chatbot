@@ -1,10 +1,16 @@
 fastapi
 langchain-core
 langchain-groq
+langchain-openai
+langchain-google-genai
+langchain-huggingface
+sentence-transformers
 python-dotenv
 uvicorn[standard]
 langchain-community
 langchain-chroma
 langchain-text-splitters
+langgraph
 chromadb
 pypdf
+python-multipart

@@ -37,7 +37,6 @@ function App() {
           </button>
         )}
       </header>
-
       <main className="stage">
         {empty ? (
           <section className="hero">
@@ -63,7 +62,13 @@ function App() {
         ) : (
           <section className="thread" ref={scrollerRef}>
             {messages.map((msg) => (
-              <Message key={msg.id} role={msg.role} content={msg.content} animate />
+              <Message
+                key={msg.id}
+                role={msg.role}
+                content={msg.content}
+                attachment={msg.attachment}
+                animate
+              />
             ))}
             {loading && (
               <div className="message message--assistant message--in">
@@ -81,7 +86,7 @@ function App() {
           <Composer
             value={draft}
             onChange={setDraft}
-            onSubmit={() => handleSend()}
+            onSubmit={(file) => handleSend(draft, file)}
             disabled={loading}
           />
         </div>

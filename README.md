@@ -34,7 +34,11 @@ Luma-Chatbot/
 - **src/domain** — request and response schemas
 - **src/llm** — LangChain/Groq model construction
 - **src/prompts** — system prompts
-- **src/services** — message construction and response generation
+- **src/documents** — PDF loading and recursive text chunking
+- **src/embeddings** — explicit embedding-provider factory
+- **src/vectorstore** — Chroma persistence and similarity retrieval
+- **src/graph** — LangGraph state, nodes, routing, and graph builder
+- **src/services** — chat generation and document indexing
 - **requirements.txt** — Python dependencies
 
 ## Setup
@@ -43,6 +47,7 @@ Luma-Chatbot/
 cp .env.example .env
 # set GROQ_API_KEY in .env
 # optionally set GROQ_MODEL to an active Groq model ID
+# set EMBEDDING_PROVIDER and EMBEDDING_MODEL before indexing documents
 
 npm install
 python3 -m venv .venv
@@ -56,8 +61,27 @@ npm run dev
 ```
 
 - API: http://127.0.0.1:8000 (health: `/health`, chat: `POST /api/chat`)
+- Documents: `GET /api/documents/status`, `POST /api/documents/index`
 - AI agent: http://127.0.0.1:8001 (health: `/health`, generation: `POST /generate`)
 - UI: http://localhost:5173
+
+The UI can upload PDF files, show the indexed chunk count, and enable
+document-grounded answers with the **Use documents** toggle. Configure an
+embedding provider before uploading:
+
+```env
+EMBEDDING_PROVIDER=openai
+EMBEDDING_MODEL=text-embedding-3-small
+OPENAI_API_KEY=your_key
+```
+
+For Gemini embeddings only, use:
+
+```env
+EMBEDDING_PROVIDER=gemini
+EMBEDDING_MODEL=models/gemini-embedding-001
+GOOGLE_API_KEY=your_google_ai_key
+```
 
 Or run separately:
 
@@ -66,6 +90,29 @@ npm run dev:backend
 npm run dev:frontend
 npm run dev:ai-agent
 ```
+
+Document indexing is intentionally separate from chat generation. Use
+the indexing command after setting `EMBEDDING_PROVIDER`:
+
+```bash
+npm run index-documents -- ./documents/example.pdf
+```
+
+The command delegates to `src.services.indexing_service.index_pdf(path)`:
+
+```text
+PDF → PyPDFLoader → RecursiveCharacterTextSplitter → embeddings → Chroma
+```
+
+Chat requests use the LangGraph workflow:
+
+```text
+question → prepare → optional Chroma retrieval → Groq answer
+```
+
+The current `/generate` route keeps retrieval disabled until documents and an
+embedding provider are configured. Set `use_retrieval` through a future
+document-chat route when the ingestion workflow is ready.
 
 ## Production (e.g. Render)
 

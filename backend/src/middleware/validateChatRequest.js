@@ -1,5 +1,5 @@
 export function validateChatRequest(req, _res, next) {
-  const { message, history } = req.body ?? {}
+  const { message, history, use_retrieval: useRetrieval, chat_id: chatId } = req.body ?? {}
 
   if (typeof message !== 'string' || !message.trim()) {
     const err = new Error('message is required')
@@ -9,6 +9,18 @@ export function validateChatRequest(req, _res, next) {
 
   if (history !== undefined && !Array.isArray(history)) {
     const err = new Error('history must be an array')
+    err.status = 422
+    return next(err)
+  }
+
+  if (useRetrieval !== undefined && typeof useRetrieval !== 'boolean') {
+    const err = new Error('use_retrieval must be a boolean')
+    err.status = 422
+    return next(err)
+  }
+
+  if (typeof chatId !== 'string' || !chatId.trim()) {
+    const err = new Error('chat_id is required')
     err.status = 422
     return next(err)
   }
@@ -33,6 +45,8 @@ export function validateChatRequest(req, _res, next) {
   req.chatInput = {
     message: message.trim(),
     history: history ?? [],
+    use_retrieval: useRetrieval ?? false,
+    chat_id: chatId.trim(),
   }
   next()
 }

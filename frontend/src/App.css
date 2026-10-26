@@ -177,6 +177,9 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
   overflow-y: auto;
   min-height: 0;
   padding: 0.25rem 0.15rem 0.5rem;
@@ -185,6 +188,8 @@
 
 .message {
   max-width: min(100%, 680px);
+  width: fit-content;
+  min-width: 5rem;
   padding: 0.95rem 1.1rem;
   border-radius: var(--radius);
   border: 1px solid transparent;
@@ -200,6 +205,7 @@
 
 .message--user {
   align-self: flex-end;
+  margin-left: auto;
   background: linear-gradient(145deg, #1a4638, var(--user));
   border-color: rgba(155, 232, 111, 0.2);
 }
@@ -418,7 +424,7 @@
 
 .composer__shell {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
   gap: 0.65rem;
   align-items: end;
   padding: 0.75rem;
@@ -438,6 +444,8 @@
 }
 
 .composer__input {
+  grid-column: 2;
+  grid-row: 1;
   width: 100%;
   resize: none;
   border: 0;
@@ -451,6 +459,90 @@
 
 .composer__input::placeholder {
   color: rgba(138, 163, 151, 0.8);
+}
+
+.composer__input--with-file {
+  padding-top: 3rem;
+}
+
+.composer__file-chip {
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: min(100%, 22rem);
+  margin: 0.1rem 0.35rem 2.45rem;
+  padding: 0.3rem 0.4rem 0.3rem 0.3rem;
+  border: 1px solid rgba(155, 232, 111, 0.25);
+  border-radius: 0.55rem;
+  background: rgba(20, 54, 43, 0.9);
+  color: var(--bone);
+  font-size: 0.74rem;
+}
+
+.composer__file-icon,
+.message__attachment-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 0.4rem;
+  background: rgba(220, 91, 91, 0.2);
+  color: #ffaaa5;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.composer__file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer__file-remove {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.composer__file-remove:hover {
+  color: var(--bone);
+}
+
+.composer__attach {
+  width: 2.35rem;
+  height: 2.35rem;
+  display: grid;
+  place-items: center;
+  align-self: end;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  color: var(--muted);
+  background: transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.composer__attach:hover {
+  color: var(--mint);
+  border-color: rgba(155, 232, 111, 0.35);
+  background: rgba(155, 232, 111, 0.06);
+}
+
+.composer__attach:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.composer__file-input {
+  display: none;
 }
 
 .composer__input:disabled {
@@ -484,6 +576,29 @@
   color: rgba(138, 163, 151, 0.75);
   font-size: 0.75rem;
   text-align: center;
+}
+
+.message__attachment {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: min(100%, 18rem);
+  margin-bottom: 0.7rem;
+  padding: 0.45rem;
+  border: 1px solid rgba(155, 232, 111, 0.18);
+  border-radius: 0.65rem;
+  background: rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  color: var(--bone);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 @keyframes drift {
